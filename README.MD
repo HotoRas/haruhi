@@ -20,7 +20,7 @@ and run by
 
 Using G++
 ```sh
-gcc -o haruhi src/main2.cpp
+g++ -o haruhi src/main2.cpp src/bigint.h
 ```
 and run by
 ```sh

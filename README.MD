@@ -3,7 +3,11 @@
 This repository contains some suggestions (minimum, maximum, and a newly suggested forms after year of 2022) of finding the Length of SuperPermutations.
 
 ## Compile and run
-Using GCC
+> Both C and C++ codes are using same algorithm- C++ version implements bigint for larger integer calculations.
+>
+> C should be faster than C++: but unable to handle too large numbers around 15! and up.
+
+Using GCC (C99 compatible)
 ```sh
 gcc -o haruhi src/main.c
 ```
@@ -12,7 +16,18 @@ and run by
 ./haruhi <the value you want to see>
 ```
 
-> The upper bound of valid value is around 14 and 15. 15 and above is safe after implementing BigInt.
+> The upper bound of valid value is around 14 and 15 on C.
+
+Using G++
+```sh
+gcc -o haruhi src/main2.cpp
+```
+and run by
+```sh
+./haruhi <the value you want to see>
+```
+
+
 
 ## What is SuperPermutation?
 SuperPermutation is the shortest array of kinds, which contains the every possible permutations using those kinds are in.

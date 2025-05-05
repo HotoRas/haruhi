@@ -27,8 +27,6 @@ and run by
 ./haruhi <the value you want to see>
 ```
 
-
-
 ## What is SuperPermutation?
 SuperPermutation is the shortest array of kinds, which contains the every possible permutations using those kinds are in.
 
@@ -76,7 +74,7 @@ The lower bound was "proved" by an anonymous poster on the Science & Math(`"/sci
 
 They declared in Sep. 2011 that it should be larger than
 ```
-S(n) > n! + (n-1)! + (n-2)! + n - 3
+S(n) >= n! + (n-1)! + (n-2)! + n - 3
 ```
 
 Robin Houston tweeted about it on Oct. 2018, and published version posted on 25 Oct. 2018 to OEIS.
@@ -88,25 +86,38 @@ However, a high schooler, "Developer Tomi" (Lee, Junghoon), discussed there migh
 
 He argued the formula is
 ```
-S(n) ~= n!/(n-2) * n + F(2(n-3)) (n>=3)
+S(n) ~= n!/(n-1) * n + F(2(n-3)) (n>=3)
 where F(x) is Fibonacci sequence
 ```
 and using Python the result plays around the minimum.
+> With YouTube comments he told the formula in notepad was wrong: he was too sleepy.
 
 ### So I decided to code it on C
 To check his formula, I (@HotoRas) decided to code the above 3.
 Two of them are widely known and the result should be in between, so I chose.
 
-With small debuggings, I found his formula needs to be patched like:
+With some mathematical optimizations, I decided to use
 ```
-S(n) ~= n!/(n-1) * n + F(2(n-3)) (n>=3)
-where F(x) is Fibonacci sequence
+S(n) <= (n-3)! ( ( (n+1)(n-1) + 1 ) (n-2) + 1) + n - 3
+S(n) >= (n-2)! ( (n+1)(n-1) + 1 ) + n - 3
+S(n) ~= n^2 (n-2)! + F(2(n-3))
+where
+	n >= 3,
+	F(n) for n >= 3 is Fibonacci sequence
 ```
-and with this patch, the result matches up to n=5, which is widely known.
+in code. These optimizations were done because compilers mostly do algorithmic optimizations to STLs but not custom implied ones.
 
-## Afterwards
-I used the STL `unsigned long long` on calculating this, and it peaks at 14 (Haruhi).
-Maybe using bigint would work more properly, but I wanted to check on STL level if it just works fine.
+### And implement the "big int"
+Firstly, I coded the thing into C (src: [main.c](./src/main.c)) to check the concept out.
+The result was neat, but the result would peak on 15 since it's heavily using factos and fibos.
+
+So I implemented it into C++, using STLlike "big int" implementations (see [bigint.h](./src/bigint.h)).
+
+It now handles up to 22 (tested on my PC) but the time increments as n\^1.2x formula and stubbed on 24.
+(Might have bug, so some more fixes might require)
+
+## Afterwords
+I should check where the overhead is: or maybe switch onto Python to get more static results.
 
 ## Credits
 - YouTuber and developer [CodingApple](https://codingapple.com) to talk about superpermutations in his YouTube channel

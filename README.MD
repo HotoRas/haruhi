@@ -116,8 +116,20 @@ So I implemented it into C++, using STLlike "big int" implementations (see [bigi
 It now handles up to 22 (tested on my PC) but the time increments as n\^1.2x formula and stubbed on 24.
 (Might have bug, so some more fixes might require)
 
+### Faster on Python
+Since Python3's "int" is meant to be "big int", it should be well-optimized running on.
+
+With some trials, I
+- disabled the intager-string buffer
+- checked up to 440k running within a minute (but the output is truncated by screen buffer: it is just too large)
+- preload fibonacci function results for ignoring overstack error
+
+Also, since it now supports much of the outputs, I implemented validity checks with comparing to the minimum.
+
+> Testing run on Python3; Pypi3 could bring you better performance (recursive operation)
+
 ## Afterwords
-I should check where the overhead is: or maybe switch onto Python to get more static results.
+Please throw me issues if you think it should be something more accurate than those in here.
 
 ## Credits
 - YouTuber and developer [CodingApple](https://codingapple.com) to talk about superpermutations in his YouTube channel

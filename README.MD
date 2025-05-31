@@ -27,6 +27,11 @@ and run by
 ./haruhi <the value you want to see>
 ```
 
+Using Python, just go to `.../python` and run
+```sh
+python3 ./haruhi.py
+```
+
 ## What is SuperPermutation?
 SuperPermutation is the shortest array of kinds, which contains the every possible permutations using those kinds are in.
 
@@ -49,6 +54,12 @@ For example, if we come up with a set {1, 2, 3} and we're going to get the lengt
 Since we don't know the forming algorithm of superpermutations (until now), we can\'t just count how many they are.
 
 Instead we should do calculations.
+
+### and Why not for how many?
+As most thinks, the beginning of "found" or "as-called" superpermutations are one of the permutations, and ends with its reverse. Also it's thought as the value is same in its reverse order. (I might implement this someday?)  
+However how many they are is another story: we shall know the algorithm of superperms to actually count.
+
+As far I think the count (eq. size of the permutation of all possible superperms of a permutation) will be `n!` for `n` length permutation but could be wrong.
 
 ## The first findings
 The upper bound is firstly declared.
@@ -116,7 +127,7 @@ So I implemented it into C++, using STLlike "big int" implementations (see [bigi
 It now handles up to 22 (tested on my PC) but the time increments as n\^1.2x formula and stubbed on 24.
 (Might have bug, so some more fixes might require)
 
-### Faster on Python
+### Faster on cPython
 Since Python3's "int" is meant to be "big int", it should be well-optimized running on.
 
 With some trials, I
@@ -129,11 +140,21 @@ Also, since it now supports much of the outputs, I implemented validity checks w
 > Testing run on Python3; Pypi3 could bring you better performance (recursive operation)
 
 ## Afterwords
+It should might get checked the generated value is same as its reverse order. The psuedo-code will be
+```py
+for i in length(superperm.size()/2+1):
+    if superperm[i] != superperm[-i-1]:
+        print('error')
+        break
+print('valid')
+```
+and I'll have to double-check if the code itself is valid Python3 or not before implementing it.
+
 Please throw me issues if you think it should be something more accurate than those in here.
 
 ## Credits
 - YouTuber and developer [CodingApple](https://codingapple.com) to talk about superpermutations in his YouTube channel
-- An anonymous 4chan poster who told the minimum formula
+- An anonymous 4chan poster who told about the minimum formula
 - Greg Egan who provided an algorithm to try superpermutation arrays, which is now the upper bounds
 - YouTuber and high-schooler [Developer Tomi](https://github.com/ImLuni5), who discusses about the rules behind superpermutations
 - You watching this long journey

@@ -3,9 +3,15 @@
 import sys
 sys.set_int_max_str_digits(0)
 
+#import math.factorial as factorial
 import math
 def factorial(n): return math.factorial(n)
 
+#try:
+#    import fibo_cache as c
+#    fibo_dict = c.dict
+#catch: # this line is invalid python3
+#    fibo_dict = {0: 0}
 fibo_dict = {0: 0}
 def fibonacci(n):
     # this will create the dictionary up to n - 300
@@ -37,6 +43,10 @@ def superperm_new(n):
     if n < 1: raise ValueError('superperm_new() not defined for negative values')
     if n == 1: return 1
     if n == 2: return 3
+    # This return is heavily mathmatically optimized
+    # to ignore bigint -> decimal translation happens
+    # (div returns decimal, mul with decimal is decimal)
+    # so the result keeps being precise
     return factorial(n - 2) * n * n + fibonacci(2 * (n - 3))
 
 def copyright():
@@ -47,7 +57,9 @@ Source code created by Hoto Ras (hotoras03@gmail.com)''')
 
 if __name__ == '__main__':
     reach = int(input('input the length of set to get superpermutation\'s length: '))
-    print('preloading...')
+    print('preloading... ')#, reach > 30000 ? 'this should take time' : '')
+    # This will preload the required amount of fibonacci
+    # not to stack top out runtime exception.
     for i in range(100, 2 * reach + 1, 100):
         print(i, end='\r')
         fibonacci(i)
@@ -60,8 +72,11 @@ if __name__ == '__main__':
         print('new: ', superperm_new(reach))
         print()
     else:
-        if reach > 30000: print('this should take time...')
         if superperm_min(reach) < superperm_new(reach): print('function valid for input ', reach)
-        else: print('function invalid for input ', reach)
+        else:
+            print('function invalid for input ', reach)
+            print('''    expected to be larger than minimum formula
+    but got smaller than one
+''')
     copyright()
 
